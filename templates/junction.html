@@ -1,0 +1,254 @@
+{% extends "base_dashboard.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/junction.css') }}">
+{% endblock %}
+
+{% block header_brand %}
+<a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-secondary me-3 d-flex align-items-center gap-2" style="border-color: rgba(255,255,255,0.1); color: #94A3B8;">
+    <i class="fa-solid fa-arrow-left"></i> Back
+</a>
+<i class="fa-solid fa-traffic-light text-primary fs-5"></i>
+<span class="d-none d-md-inline ms-2 fw-bold text-white fs-5">Ahmedabad Smart City <span class="fw-normal text-secondary mx-2">|</span> {{ junction_name | replace('_', ' ') | upper }}</span>
+<div class="ms-4 badge rounded-pill bg-success bg-opacity-10 border border-success text-success d-flex align-items-center gap-2 px-3 py-1 shadow-sm">
+    <div class="dot-indicator bg-success shadow-sm" style="width:8px;height:8px;border-radius:50%; animation: pulse 2s infinite;"></div>
+    LIVE
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="junction-container">
+    
+    <!-- Top Row: Surveillance and Intelligence Grid -->
+    <div class="row g-4 mb-4">
+        
+        <!-- Left Side: Surveillance Grid (70%) -->
+        <div class="col-12 col-xl-8">
+            <h5 class="section-title mb-3"><i class="fa-solid fa-video text-primary me-2"></i> Traffic Surveillance Grid</h5>
+            
+            <div class="row g-3">
+                <!-- North Camera -->
+                <div class="col-12 col-md-6">
+                    <div class="glass-panel camera-card h-100">
+                        <div class="panel-header mb-3 pb-2">
+                            <h6 class="panel-title"><i class="fa-regular fa-compass text-secondary"></i> NORTH APPROACH</h6>
+                            <span class="text-success fw-bold" style="font-size:0.8rem;"><i class="fa-solid fa-check-circle me-1"></i> Online</span>
+                        </div>
+                        <div class="video-placeholder p-0 border-0 position-relative" style="background: transparent;">
+                            <div class="video-overlay-top" style="z-index: 10;">
+                                <span class="badge-live">REC</span>
+                                <span class="badge bg-dark border border-secondary text-white font-monospace opacity-75">CAM_N_01</span>
+                            </div>
+                            <img src="{{ url_for('stream', junction=junction_name, direction='north') }}" alt="North Feed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            
+                            <div style="font-size: 0.75rem; color: #94A3B8; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 4px 12px; display: flex; justify-content: space-between; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 10; backdrop-filter: blur(4px);">
+                                <span id="ai-status-north"><i class="fa-solid fa-microchip text-primary"></i> Init...</span>
+                                <span id="fps-north" class="font-monospace">FPS: --</span>
+                                <span id="conf-north" class="font-monospace">Conf: --%</span>
+                            </div>
+                        </div>
+                        <div class="cam-stats mt-auto">
+                            <div class="cam-stat-box">
+                                <div class="cam-stat-label">Volume (veh/min)</div>
+                                <div class="cam-stat-val text-info" style="font-size: 1.2rem;" id="vol-north">...</div>
+                            </div>
+                            <div class="cam-stat-box text-end">
+                                <div class="cam-stat-label">Congestion</div>
+                                <div class="cam-stat-val text-secondary" style="font-size: 0.95rem;" id="cong-north">Detecting...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- East Camera -->
+                <div class="col-12 col-md-6">
+                    <div class="glass-panel camera-card h-100">
+                        <div class="panel-header mb-3 pb-2">
+                            <h6 class="panel-title"><i class="fa-regular fa-compass text-secondary"></i> EAST APPROACH</h6>
+                            <span class="text-success fw-bold" style="font-size:0.8rem;"><i class="fa-solid fa-check-circle me-1"></i> Online</span>
+                        </div>
+                        <div class="video-placeholder p-0 border-0 position-relative" style="background: transparent;">
+                            <div class="video-overlay-top" style="z-index: 10;">
+                                <span class="badge-live">REC</span>
+                                <span class="badge bg-dark border border-secondary text-white font-monospace opacity-75">CAM_E_01</span>
+                            </div>
+                            <img src="{{ url_for('stream', junction=junction_name, direction='east') }}" alt="East Feed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            
+                            <div style="font-size: 0.75rem; color: #94A3B8; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 4px 12px; display: flex; justify-content: space-between; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 10; backdrop-filter: blur(4px);">
+                                <span id="ai-status-east"><i class="fa-solid fa-microchip text-primary"></i> Init...</span>
+                                <span id="fps-east" class="font-monospace">FPS: --</span>
+                                <span id="conf-east" class="font-monospace">Conf: --%</span>
+                            </div>
+                        </div>
+                        <div class="cam-stats mt-auto">
+                            <div class="cam-stat-box">
+                                <div class="cam-stat-label">Volume (veh/min)</div>
+                                <div class="cam-stat-val text-info" style="font-size: 1.2rem;" id="vol-east">...</div>
+                            </div>
+                            <div class="cam-stat-box text-end">
+                                <div class="cam-stat-label">Congestion</div>
+                                <div class="cam-stat-val text-secondary" style="font-size: 0.95rem;" id="cong-east">Detecting...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- West Camera -->
+                <div class="col-12 col-md-6">
+                    <div class="glass-panel camera-card h-100">
+                        <div class="panel-header mb-3 pb-2">
+                            <h6 class="panel-title"><i class="fa-regular fa-compass text-secondary"></i> WEST APPROACH</h6>
+                            <span class="text-success fw-bold" style="font-size:0.8rem;"><i class="fa-solid fa-check-circle me-1"></i> Online</span>
+                        </div>
+                        <div class="video-placeholder p-0 border-0 position-relative" style="background: transparent;">
+                            <div class="video-overlay-top" style="z-index: 10;">
+                                <span class="badge-live">REC</span>
+                                <span class="badge bg-dark border border-secondary text-white font-monospace opacity-75">CAM_W_01</span>
+                            </div>
+                            <img src="{{ url_for('stream', junction=junction_name, direction='west') }}" alt="West Feed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            
+                            <div style="font-size: 0.75rem; color: #94A3B8; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 4px 12px; display: flex; justify-content: space-between; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 10; backdrop-filter: blur(4px);">
+                                <span id="ai-status-west"><i class="fa-solid fa-microchip text-primary"></i> Init...</span>
+                                <span id="fps-west" class="font-monospace">FPS: --</span>
+                                <span id="conf-west" class="font-monospace">Conf: --%</span>
+                            </div>
+                        </div>
+                        <div class="cam-stats mt-auto">
+                            <div class="cam-stat-box">
+                                <div class="cam-stat-label">Volume (veh/min)</div>
+                                <div class="cam-stat-val text-info" style="font-size: 1.2rem;" id="vol-west">...</div>
+                            </div>
+                            <div class="cam-stat-box text-end">
+                                <div class="cam-stat-label">Congestion</div>
+                                <div class="cam-stat-val text-secondary" style="font-size: 0.95rem;" id="cong-west">Detecting...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- South Camera -->
+                <div class="col-12 col-md-6">
+                    <div class="glass-panel camera-card h-100">
+                        <div class="panel-header mb-3 pb-2">
+                            <h6 class="panel-title"><i class="fa-regular fa-compass text-secondary"></i> SOUTH APPROACH</h6>
+                            <span class="text-success fw-bold" style="font-size:0.8rem;"><i class="fa-solid fa-check-circle me-1"></i> Online</span>
+                        </div>
+                        <div class="video-placeholder p-0 border-0 position-relative" style="background: transparent;">
+                            <div class="video-overlay-top" style="z-index: 10;">
+                                <span class="badge-live">REC</span>
+                                <span class="badge bg-dark border border-secondary text-white font-monospace opacity-75">CAM_S_01</span>
+                            </div>
+                            <img src="{{ url_for('stream', junction=junction_name, direction='south') }}" alt="South Feed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            
+                            <div style="font-size: 0.75rem; color: #94A3B8; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 4px 12px; display: flex; justify-content: space-between; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; z-index: 10; backdrop-filter: blur(4px);">
+                                <span id="ai-status-south"><i class="fa-solid fa-microchip text-primary"></i> Init...</span>
+                                <span id="fps-south" class="font-monospace">FPS: --</span>
+                                <span id="conf-south" class="font-monospace">Conf: --%</span>
+                            </div>
+                        </div>
+                        <div class="cam-stats mt-auto">
+                            <div class="cam-stat-box">
+                                <div class="cam-stat-label">Volume (veh/min)</div>
+                                <div class="cam-stat-val text-info" style="font-size: 1.2rem;" id="vol-south">...</div>
+                            </div>
+                            <div class="cam-stat-box text-end">
+                                <div class="cam-stat-label">Congestion</div>
+                                <div class="cam-stat-val text-secondary" style="font-size: 0.95rem;" id="cong-south">Detecting...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Traffic Intelligence Panel (30%) -->
+        <div class="col-12 col-xl-4 d-flex flex-column gap-3">
+            <h5 class="section-title mb-1"><i class="fa-solid fa-brain text-purple me-2"></i> Intelligence Panel</h5>
+            
+            <!-- Panel 1: AI Recommendation -->
+            <div class="glass-panel p-3">
+                <div class="panel-header mb-2 pb-2">
+                    <h6 class="panel-title text-warning"><i class="fa-solid fa-lightbulb"></i> AI Recommendation</h6>
+                </div>
+                <div class="ai-recommendation">
+                    <div class="stat-row"><span>Selected Lane</span> <span class="highlight-val text-danger" id="ai-rec-lane">...</span></div>
+                    <div class="stat-row"><span>Traffic Volume</span> <span class="highlight-val text-info" id="ai-rec-vol">...</span></div>
+                    <div class="stat-row"><span>Congestion</span> <span class="highlight-val text-warning" id="ai-rec-cong">...</span></div>
+                    <div class="stat-row"><span>Priority Score</span> <span class="highlight-val text-primary" id="ai-rec-score">...</span></div>
+                    <div class="stat-row"><span>Allocated Green Time</span> <span class="highlight-val text-success" id="ai-rec-green">...</span></div>
+                    <div class="stat-row border-0 pb-0">
+                        <div class="w-100 mt-2 p-2 bg-dark rounded border border-secondary border-opacity-50 text-muted" style="font-size:0.8rem; line-height: 1.4;">
+                            <strong class="text-white">Decision Reason:</strong> <span id="ai-rec-reason">Awaiting first cycle analysis...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Signal Controller -->
+            <div class="glass-panel p-3">
+                <div class="panel-header mb-3 pb-2">
+                    <h6 class="panel-title"><i class="fa-solid fa-gamepad"></i> Signal Controller</h6>
+                </div>
+                <div class="signal-grid">
+                    <div class="signal-box" id="box-north">
+                        <div class="dir-label">NORTH</div>
+                        <div class="signal-light red" id="light-north"></div>
+                        <div class="signal-timer text-muted" id="timer-north">--</div>
+                    </div>
+                    <div class="signal-box" id="box-east">
+                        <div class="dir-label">EAST</div>
+                        <div class="signal-light red" id="light-east"></div>
+                        <div class="signal-timer text-muted" id="timer-east">--</div>
+                    </div>
+                    <div class="signal-box" id="box-west">
+                        <div class="dir-label">WEST</div>
+                        <div class="signal-light red" id="light-west"></div>
+                        <div class="signal-timer text-muted" id="timer-west">--</div>
+                    </div>
+                    <div class="signal-box" id="box-south">
+                        <div class="dir-label">SOUTH</div>
+                        <div class="signal-light red" id="light-south"></div>
+                        <div class="signal-timer text-muted" id="timer-south">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Decision History -->
+            <div class="glass-panel p-3">
+                <div class="panel-header mb-0 pb-2">
+                    <h6 class="panel-title"><i class="fa-solid fa-clock-rotate-left text-info"></i> Decision History</h6>
+                </div>
+                <div class="table-responsive mt-2">
+                    <table class="table table-dark table-borderless table-sm mb-0 align-middle" style="background: transparent; font-size: 0.85rem;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94A3B8;">
+                                <th>Time</th>
+                                <th>Road</th>
+                                <th>Score</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody id="decision-history-body">
+                            <tr><td colspan="4" class="text-center text-muted py-4">Waiting for cycle...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel 4: Terminal Log -->
+            <div class="glass-panel p-3 flex-grow-1 d-flex flex-column">
+                <div class="panel-header mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                    <h6 class="panel-title"><i class="fa-solid fa-terminal text-success"></i> Terminal Log</h6>
+                </div>
+                <div class="terminal-log flex-grow-1" id="event-log" style="min-height: 150px;">
+                    <div class="log-line"><span class="log-msg text-muted">Awaiting cycle initialization...</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/junction.js') }}"></script>
+{% endblock %}
