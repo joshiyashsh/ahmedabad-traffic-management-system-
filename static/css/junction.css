@@ -1,0 +1,172 @@
+/* static/css/junction.css */
+
+.junction-container {
+    padding: 1.5rem 2.5rem;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #F8FAFC;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.text-purple { color: #A855F7; }
+
+/* Glass Panels */
+.glass-panel {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #F8FAFC;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* Video Feed Containers */
+.camera-card { padding: 1.25rem; transition: transform 0.3s ease; }
+.camera-card:hover { transform: translateY(-3px); border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5); }
+
+.video-placeholder {
+    aspect-ratio: 16/9;
+    background: #000;
+    border: 1px solid #1E293B;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #64748B;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+}
+.video-placeholder i { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.4; }
+.video-placeholder p { font-size: 0.95rem; margin: 0; font-family: 'Roboto Mono', monospace; letter-spacing: 1px; color: #94A3B8; }
+
+.video-overlay-top {
+    position: absolute; top: 12px; left: 12px; right: 12px;
+    display: flex; justify-content: space-between;
+}
+.badge-live {
+    background: rgba(220, 38, 38, 0.85); color: white;
+    padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 1.5px; animation: blinker 2s linear infinite;
+    box-shadow: 0 0 10px rgba(220,38,38,0.5);
+}
+@keyframes blinker { 50% { opacity: 0.3; } }
+
+.cam-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.cam-stat-box {
+    background: rgba(15, 23, 42, 0.6); padding: 0.85rem; border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+.cam-stat-label { font-size: 0.75rem; color: #94A3B8; margin-bottom: 4px; text-transform: uppercase; font-weight: 600; }
+.cam-stat-val { font-size: 1.2rem; font-weight: 700; color: #F8FAFC; font-family: 'Roboto Mono', monospace; }
+
+/* AI Recommendation Panel */
+.ai-recommendation .stat-row {
+    display: flex; justify-content: space-between; padding: 0.65rem 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.05); font-size: 0.95rem;
+}
+.ai-recommendation .stat-row:last-child { border-bottom: none; }
+.highlight-val { color: #F8FAFC; font-weight: 700; font-family: 'Roboto Mono', monospace; }
+
+/* Signal Controller Panel */
+.signal-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+.signal-box {
+    background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 1.25rem 1rem;
+    display: flex; flex-direction: column; align-items: center; border: 1px solid transparent;
+    transition: all 0.3s;
+}
+.signal-box.active { border-color: rgba(16, 185, 129, 0.4); box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); background: rgba(16, 185, 129, 0.05); }
+.dir-label { font-weight: 700; color: #94A3B8; margin-bottom: 0.75rem; font-size: 0.95rem; letter-spacing: 1px; }
+.signal-light {
+    width: 36px; height: 36px; border-radius: 50%; background: #1E293B;
+    margin-bottom: 0.75rem; border: 2px solid #0F172A;
+}
+.signal-light.green { background: #10B981; box-shadow: 0 0 20px #10B981, inset 0 0 5px rgba(255,255,255,0.8); }
+.signal-light.red { background: #EF4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 5px rgba(255,255,255,0.2); }
+.signal-timer { font-family: 'Roboto Mono', monospace; font-size: 1.4rem; font-weight: 700; color: #64748B; }
+.active .signal-timer { color: #10B981; text-shadow: 0 0 10px rgba(16,185,129,0.5); }
+
+/* Adaptive Signal Cycle Panel */
+.cycle-flow {
+    display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 0.5rem;
+}
+.cycle-node {
+    padding: 0.5rem 2rem; border-radius: 30px; background: rgba(15, 23, 42, 0.5);
+    color: #94A3B8; font-weight: 700; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s; width: 60%; text-align: center; letter-spacing: 1px;
+}
+.cycle-node.active {
+    background: rgba(16, 185, 129, 0.15); color: #10B981; border-color: rgba(16,185,129,0.5);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); transform: scale(1.05);
+}
+.cycle-arrow { color: #475569; font-size: 0.9rem; }
+
+/* Vehicle Metrics Panel */
+.metrics-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 0.5rem;
+}
+.metric-box {
+    background: rgba(15, 23, 42, 0.6); padding: 1rem 0.5rem; border-radius: 8px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.02); transition: transform 0.2s;
+}
+.metric-box:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+.metric-box i { font-size: 1.4rem; color: #64748B; margin-bottom: 8px; }
+.metric-box .val { font-family: 'Roboto Mono', monospace; font-size: 1.25rem; font-weight: 700; color: #F8FAFC; }
+
+/* Terminal Event Log */
+.terminal-log {
+    background: #0B101E; border-radius: 8px; padding: 1.25rem; font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem; height: 220px; overflow-y: auto; box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+    border: 1px solid #1E293B; margin-top: 1rem; line-height: 1.6;
+}
+.terminal-log::-webkit-scrollbar { width: 6px; }
+.terminal-log::-webkit-scrollbar-track { background: #0B101E; }
+.terminal-log::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+.log-line { margin-bottom: 0.5rem; display: flex; gap: 12px; }
+.log-time { color: #64748B; }
+.log-level.info { color: #3B82F6; }
+.log-level.warn { color: #F59E0B; }
+.log-msg { color: #E2E8F0; }
+
+/* Chart Placeholders */
+.chart-placeholder {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; color: #64748B;
+    background: rgba(15, 23, 42, 0.3); margin-top: 1rem;
+}

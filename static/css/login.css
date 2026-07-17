@@ -1,0 +1,290 @@
+/* static/css/login.css */
+
+/* Background Animations */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: linear-gradient(-45deg, #0B101E, #111827, #1E293B, #0F172A) !important;
+    background-size: 400% 400% !important;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Subtle moving particles */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.12);
+    animation: float 20s infinite linear;
+    bottom: -100px;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Glassmorphism Card Layout */
+.login-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+}
+
+.glass-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+@keyframes cardEntrance {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Typography & Header Elements */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.icon-container {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+    font-size: 2.2rem;
+    color: #fff;
+    box-shadow: 0 12px 30px -5px rgba(37, 99, 235, 0.5);
+}
+
+.brand-title {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #F8FAFC;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    font-size: 0.95rem;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Form Styling */
+.custom-form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.25rem;
+    color: #64748B;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+.custom-input {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #F8FAFC;
+    padding: 1.1rem 1.1rem 1.1rem 3.25rem;
+    border-radius: 14px;
+    width: 100%;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    outline: none;
+    background: rgba(15, 23, 42, 0.85);
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.custom-input:focus + .form-icon, .custom-input:not(:placeholder-shown) + .form-icon {
+    color: #3B82F6;
+}
+
+.custom-input::placeholder {
+    color: #64748B;
+}
+
+/* Primary Authenticate Button */
+.btn-primary-glow {
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    color: white;
+    border: none;
+    padding: 1.15rem;
+    border-radius: 14px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.btn-primary-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.5);
+    background: linear-gradient(135deg, #60A5FA, #2563EB);
+}
+
+.btn-primary-glow:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Loading Animation State */
+.btn-primary-glow.loading .btn-text {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.btn-primary-glow.loading::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* System Status Indicators */
+.system-status {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.status-item {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    color: #94A3B8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.status-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.dot.online {
+    background-color: #10B981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+.dot.ready {
+    background-color: #3B82F6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+}
+
+.dot.version {
+    background-color: #F59E0B;
+}
+
+/* Footer styling */
+.login-footer {
+    padding: 1.5rem;
+    text-align: center;
+    color: #94A3B8;
+    font-size: 0.85rem;
+    z-index: 1;
+}
+
+.footer-title {
+    font-weight: 500;
+    color: #CBD5E1;
+    margin-bottom: 0.2rem;
+}
+
+.footer-subtitle {
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+/* Responsive constraints */
+@media (max-width: 576px) {
+    .glass-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
+    }
+    
+    .system-status {
+        justify-content: center;
+    }
+}
